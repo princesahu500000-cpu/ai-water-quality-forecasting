@@ -1,0 +1,5 @@
+Model,MAE,RMSE,MAPE_%,Category_Acc_%
+XGBoost,3.75,4.85,4.32,96.83
+RandomForest,3.93,5.13,4.51,98.41
+SARIMAX,5.0,6.11,5.56,96.83
+Naive,5.52,6.55,6.15,96.83
