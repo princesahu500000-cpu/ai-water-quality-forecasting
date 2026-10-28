@@ -207,8 +207,9 @@ def synthetic_tab():
     min_d = df.index[14].date()
     max_d = df.index[-1].date()
     c1, c2 = st.columns([1, 2])
-    origin = pd.Timestamp(c1.date_input("Forecast date (predicts 7 days ahead)",
-                                        value=max_d, min_value=min_d, max_value=max_d))
+        origin = pd.Timestamp(c1.date_input("Forecast date (predicts 7 days ahead)",
+                                        value=(pd.Timestamp(max_d) - pd.Timedelta(days=7)).date(),
+                                        min_value=min_d, max_value=max_d))
     window = c2.slider("History window (days)", 30, 365, 120)
 
     x = feat.loc[[origin], feat_cols]
@@ -224,8 +225,7 @@ def synthetic_tab():
     if not np.isnan(actual):
         m4.metric("Actual WQI (from data)", f"{actual:.1f}", f"error {pred - actual:+.1f}", delta_color="off")
     else:
-        m4.metric("Actual WQI", "Not available (future date)")
-
+                m4.metric("Actual WQI", "Future date")
     show_status(wqi_category(pred))
 
     hist = df["wqi"].loc[origin - pd.Timedelta(days=window): origin]
